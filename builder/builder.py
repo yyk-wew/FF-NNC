@@ -6,7 +6,7 @@ import einops
 from mesonet import Meso4
 from torchvision.models.resnet import resnet50
 from xception import xception
-from vit import Transformer
+from aim import AIMWrapper
 from ncc import AbsLinear
 
 import torchvision.transforms as trans
@@ -16,7 +16,9 @@ class Trainer(nn.Module):
     def __init__(self, model_name='resnet',use_mc=False, use_ncc=False, use_aim=False):
         """
         model_name: name of backbone module ('resnet', 'xception', 'mesonet')
-        ce: 
+        use_mc: whether to use multi-class supervision 
+        use_ncc: whether to use non-negative linear classifier
+        use_aim: whether to use augmented integration module
         """
         super(Trainer, self).__init__()
 
@@ -26,15 +28,7 @@ class Trainer(nn.Module):
         # init AIM
         self.use_aim = use_aim
         if self.use_aim:
-            self.ATT = Transformer(dim=2048, depth=1, heads=8, dim_head=256, mlp_dim=2048)
-            self.trans1 = trans.Compose([
-                trans.CenterCrop(224),
-                trans.Resize(256)
-            ])
-            self.trans2 = trans.Compose([
-                trans.RandomHorizontalFlip(p=1.)
-            ])
-            self.att_bn = nn.BatchNorm1d(2048)
+            self.AIM = AIMWrapper(self.backbone)
 
         # init classifier
         self.use_mc = use_mc
@@ -67,19 +61,10 @@ class Trainer(nn.Module):
 
 
     def forward(self, x):
-        if self.aug:
-            x = torch.cat([x, self.trans1(x), self.trans2(x)], 0)
-
-        x = self.backbone(x)   # x [B, 2048] / [B*3, 2048]
-
-        if self.aug:
-            x = einops.rearrange(x, '(b1 b2) c -> b2 b1 c', b1=3)
-            x = self.ATT(x)
-            x = einops.rearrange(x, 'n l c -> (n l) c')
-            x = self.att_bn(x)
-            x = einops.rearrange(x, '(n l) c -> n l c', l=3)
-            x = F.relu(x)
-            x = torch.mean(x, dim=1)
+        if self.use_aim:
+            x = self.AIM(x)
+        else:
+            x = self.backbone(x)
         
         score = self.fc(x)
    
