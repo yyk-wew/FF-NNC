@@ -24,6 +24,8 @@ class AIMWrapper(nn.Module):
 
     def forward(self, x):
         x = torch.cat([x, self.trans1(x), self.trans2(x)], 0)
+
+        x = self.backbone(x)
         
         x = einops.rearrange(x, '(b1 b2) c -> b2 b1 c', b1=3)
         x = self.ATT(x)

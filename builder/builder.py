@@ -37,9 +37,7 @@ class Trainer(nn.Module):
         self.use_ncc = use_ncc
         if use_ncc:
             self.fc = AbsLinear(2048, out_dim)
-            self.fc.weight.data.normal_(mean=0.0, std=0.01)
-            self.fc.bias.data.zero_()
-            self.fc.bias.data[0] = 5.
+            self.fc.init()
         else:
             self.fc = nn.Linear(2048, out_dim)
             self.fc.weight.data.normal_(mean=0.0, std=0.01)

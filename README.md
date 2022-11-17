@@ -67,8 +67,9 @@ python main.py --help
 ### Example
 With default parameters setting, to traing a model with `AIM` and `NCC` from the scratch, please run:
 ```python
-python main.py --output-dir /path/to/checkpoint/ --backbone-name resnet --dataset-path /path/to/dataset/ --use-ncc --use-aim --use-mc --warmup-iter 20000
+python main.py --output-dir /path/to/checkpoint/ --backbone-name resnet --dataset-path /path/to/dataset/ --use-ncc --use-aim --use-mc
 ```
+If a pretrained backbone is loaded, we recommend to set `warmup-iters` to 20000.
 
 ## Evaluation
 

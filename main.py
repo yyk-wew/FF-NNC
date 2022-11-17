@@ -21,7 +21,7 @@ def main(args):
     logger = SummaryWriter(args.output_dir)
 
     # --- Dataloader ---
-    print("Loading dataset => {}".format(args.dataset_path))
+    print("Loading dataset from {}".format(args.dataset_path))
     train_dataset = get_FF_5_class(args.dataset_path, mode='train', isTrain=True, img_size=args.image_size)
     train_dataloader = torch.utils.data.DataLoader(
         dataset = train_dataset, batch_size=args.batch_size, shuffle=True, num_workers=args.workers, drop_last=True
@@ -39,9 +39,9 @@ def main(args):
 
     # --- Model and Optimizer ---
     model = Trainer(args.backbone_name, args.use_mc, args.use_ncc, args.use_aim)
-    if args.pretrained_weights_path != '':
-        msg = model.load_pretrained_backbone(path=args.pretrained_weights_path)
-        print("Found pretrained model at {} and loaded with msg: {}".format(args.pretrained_weights_path, msg))
+    if args.pretrained_backbone_path != '':
+        msg = model.load_pretrained_backbone(path=args.pretrained_backbone_path)
+        print("Found pretrained model at {} and loaded with msg: {}".format(args.pretrained_backbone_path, msg))
     model = model.cuda()
 
     # -- Warmup Setup --

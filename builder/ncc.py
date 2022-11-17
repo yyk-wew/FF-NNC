@@ -28,3 +28,8 @@ class AbsLinear(nn.Module):
         return 'in_features={}, out_features={}, bias={}'.format(
             self.in_features, self.out_features, self.bias is not None
         )
+
+    def init(self, bias_const=5.):
+        self.weight.data.normal_(mean=0.0, std=0.01)
+        self.bias.data.zero_()
+        self.bias.data[0] = bias_const

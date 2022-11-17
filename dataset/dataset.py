@@ -25,6 +25,7 @@ class DataCollector(data.Dataset):
                 trans.ToTensor(),])
 
         # walk through folder
+        assert os.path.isdir(path)
         for dirpath, dirnames, filenames in os.walk(path):
             temp_list = [os.path.join(dirpath, file_name) for file_name in filenames]
             self._image_list = self._image_list + temp_list
