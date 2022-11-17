@@ -1,7 +1,7 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from vit import Transformer
+from .vit import Transformer
 import torchvision.transforms as trans
 import einops
 

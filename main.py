@@ -129,15 +129,15 @@ if __name__ == "__main__":
     parser.add_argument('--loss-print-freq', default=50, type=int, help='Print loss every x iters')
     parser.add_argument('--eval-print-freq', default=1000, type=int, help='Print eval results every x iters')
     # -- train para --
-    parser.add_argument('--epochs', default=5, type=int, metavar='N',
+    parser.add_argument('--epochs', default=5, type=int,
                         help='Number of total epochs of training')
     parser.add_argument('--lr', '--learning-rate', default=0.0001, type=float,
-                        metavar='LR', help='Initial learning rate', dest='lr')
+                        help='Initial learning rate', dest='lr')
     parser.add_argument('--backbone-name', type=str, default='resnet', help='Name of backbone module')
     parser.add_argument('--pretrained-backbone-path', default='', type=str, help='Path to pretrained backbone. Empty for training from scratch.')
     # -- dataset para --
     parser.add_argument('--image-size', default=256, type=int, help="Input image size (Default: 256)")
-    parser.add_argument('-j', '--workers', default=12, type=int, metavar='N',
+    parser.add_argument('-j', '--workers', default=12, type=int,
                         help='number of data loading workers (Default: 12)')
     parser.add_argument('--dataset-path', type=str, default='/path/to/FF++/', help='Dataset directory')
     parser.add_argument('--batch-size', default=32, type=int, help='Number of images in each mini-batch (Default: 32)')

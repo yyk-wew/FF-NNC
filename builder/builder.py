@@ -3,11 +3,11 @@ import torch.nn as nn
 import torch.nn.functional as F
 import einops
 
-from mesonet import Meso4
+from .mesonet import Meso4
 from torchvision.models.resnet import resnet50
-from xception import xception
-from aim import AIMWrapper
-from ncc import AbsLinear
+from .xception import xception
+from .aim import AIMWrapper
+from .ncc import AbsLinear
 
 import torchvision.transforms as trans
 
