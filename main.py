@@ -45,9 +45,8 @@ def main(args):
     model = model.cuda()
 
     # -- Warmup Setup --
-    if args.warmup_iter > 0:
-        for param in model.backbone.parameters():
-                param.requires_grad = False
+    for param in model.backbone.parameters():
+        param.requires_grad = False
 
     optimizer = torch.optim.Adam(list(filter(lambda p: p.requires_grad, model.parameters())), lr=args.lr, betas=(0.9, 0.999))
     model.apply(to_sync_bn)
@@ -67,7 +66,6 @@ def main(args):
                 for param in model.module.backbone.parameters():
                     param.requires_grad = True
                 optimizer.add_param_group({'params': model.module.backbone.parameters()})
-                print("Backbone updated.")
             
             img = img.cuda()
 

@@ -6,7 +6,7 @@ import einops
 from .mesonet import Meso4
 from torchvision.models.resnet import resnet50
 from .xception import xception
-from .aim import AIMWrapper
+from .aim import AIM
 from .ncc import AbsLinear
 
 import torchvision.transforms as trans
@@ -28,7 +28,7 @@ class Trainer(nn.Module):
         # init AIM
         self.use_aim = use_aim
         if self.use_aim:
-            self.AIM = AIMWrapper(self.backbone)
+            self.AIM = AIM()
 
         # init classifier
         self.use_mc = use_mc
@@ -60,7 +60,7 @@ class Trainer(nn.Module):
 
     def forward(self, x):
         if self.use_aim:
-            x = self.AIM(x)
+            x = self.AIM(x, self.backbone)
         else:
             x = self.backbone(x)
         
