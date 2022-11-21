@@ -79,7 +79,7 @@ To evalulate on `FaceForensics++` dataset, please run:
 python evaluation.py --ckpt-path /path/to/checkpoint/ --backbone-name resnet --dataset-path /path/to/dataset/ --use-ncc --use-aim --use-mc
 ```
 
-Our method with multi-class supervision, AIM and NCC on `c40`, test split:
+Evaluation result of our method (with multi-class supervision, AIM and NCC) on `FF++ c40`, test split:
 
 | Backbone | AUC | r_acc | f_acc |
 |----------|-----|-------|-------|
