@@ -76,11 +76,11 @@ If a pretrained backbone is loaded, we recommend to set `warmup-iters` to 20000.
 To evalulate on `FaceForensics++` dataset, please run:
 
 ```python
-python evaluation.py --ckpt-path /path/to/checkpoint/ --backbone-name resnet --dataset-path /path/to/dataset/ --use-ncc --use-aim
+python evaluation.py --ckpt-path /path/to/checkpoint/ --backbone-name resnet --dataset-path /path/to/dataset/ --use-ncc --use-aim --use-mc
 ```
 
-Our method with multi-class supervision, AIM and NCC on `c40`:
+Our method with multi-class supervision, AIM and NCC on `c40`, test split:
 
 | Backbone | AUC | r_acc | f_acc |
 |----------|-----|-------|-------|
-|ResNet50  |x    |       |       |
+|Xception  |92.15|78.49  |87.73  |

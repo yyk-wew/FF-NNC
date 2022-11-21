@@ -44,7 +44,7 @@ def evaluate(model, dataloader):
 
 
 if __name__ == "__main__":
-    from dataset.dataset import get_FF_dataset
+    from dataset.dataset import get_FF_dataset, get_test_dataset
     from builder.builder import Trainer
     import torch.nn as nn
     import argparse
@@ -58,6 +58,7 @@ if __name__ == "__main__":
     parser.add_argument('--image-size', default=256, type=int, help="Input image size (default: 256)")
     parser.add_argument('--use-ncc', action='store_true', help='Whether to use non-negative linear classifier (Default: false)')
     parser.add_argument('--use-aim', action='store_true', help='Whether to use augmented integration module (Default: false)')
+    parser.add_argument('--use-mc', action='store_true', help='Whether to use multi-class supervision.')
     
     args = parser.parse_args()
     
@@ -66,7 +67,7 @@ if __name__ == "__main__":
         dataset = test_dataset, batch_size=args.batch_size, shuffle=False, num_workers=args.workers, drop_last=True
     )
 
-    model = Trainer(args.backbone_name, use_ncc=args.use_ncc, use_aim=args.use_aim)
+    model = Trainer(args.backbone_name, use_mc=args.use_mc, use_ncc=args.use_ncc, use_aim=args.use_aim)
     model.load_state_dict(torch.load(args.ckpt_path)['model'], strict=True)
     model = model.cuda()
     model = nn.DataParallel(model)
