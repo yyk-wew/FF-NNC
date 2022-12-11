@@ -79,8 +79,15 @@ To evalulate on `FaceForensics++` dataset, please run:
 python evaluation.py --ckpt-path /path/to/checkpoint/ --backbone-name resnet --dataset-path /path/to/dataset/ --use-ncc --use-aim --use-mc
 ```
 
-Evaluation result of our method (with multi-class supervision, AIM and NCC) on `FF++ c40`, test split:
+## Performance Analysis
 
-| Backbone | AUC | r_acc | f_acc |
-|----------|-----|-------|-------|
-|Xception  |92.15|78.49  |87.73  |
+We compare the baseline (vanilla xception, binary supervision) with our method (xception, multi-class supervision, with NCC and AIM).
+
+The performance evaluation is conducted on `FF++ c40` test split. Execution time is measured with batch size 1, 20 runs averaged.
+
+| Methods  | AUC |Params(M)|MACs(G)|CPU total(s)|GPU total(ms)|
+|----------|-----|---------|-------|------------|-------------|
+|Xception  |88.65|20.811   |6.012  |2.083       |121.743      |
+|Ours      |92.15|37.605   |18.085 |2.404       |272.773      |
+
+Note: Params and MACs are measured by [pytorch-OpCounter](https://github.com/Lyken17/pytorch-OpCounter). CPU total and GPU total are measured by [pytorch profiler](https://pytorch.org/tutorials/recipes/recipes/profiler_recipe.html). The CPU total time includes CUDALauchKernel.
