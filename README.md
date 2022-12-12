@@ -90,4 +90,4 @@ The performance evaluation is conducted on `FF++ c40` test split. Execution time
 |Xception  |88.65|20.811   |6.012  |2.083       |121.743      |
 |Ours      |92.15|37.605   |18.085 |2.404       |272.773      |
 
-Note: Params and MACs are measured by [pytorch-OpCounter](https://github.com/Lyken17/pytorch-OpCounter). CPU total and GPU total are measured by [pytorch profiler](https://pytorch.org/tutorials/recipes/recipes/profiler_recipe.html). The CPU total time includes CUDALauchKernel.
+Note: Params and MACs are measured by [pytorch-OpCounter](https://github.com/Lyken17/pytorch-OpCounter). CPU total and GPU total are measured by [pytorch profiler](https://pytorch.org/tutorials/recipes/recipes/profiler_recipe.html). The CPU total time includes CUDALauchKernel. Check [comp_cost.py](comp_cost.py) and [runtime_cost.py](runtime_cost.py) for more details.
